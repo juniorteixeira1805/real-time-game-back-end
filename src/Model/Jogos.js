@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const mongoosePaginate = require('mongoose-paginate')
 
 
-const ProductSchema = new mongoose.Schema({
+const JogostSchema = new mongoose.Schema({
     dateCreater: {
         type: Date,
         default: Date.now
@@ -53,4 +53,4 @@ const ProductSchema = new mongoose.Schema({
 // Definido o pluglin para poder utilizar a função paginate
 ProductSchema.plugin(mongoosePaginate)
 
-mongoose.model('product', ProductSchema)
+mongoose.model('jogos', ProductSchema)
