@@ -4,7 +4,8 @@
   "description": "real-time-game é uma sistema para um time amador poder transmitir jogos, divulgar patrocinadores e mostrar tudo relacionado ao time",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node bin/index"
   },
   "repository": {
     "type": "git",
