@@ -15,25 +15,29 @@ const JogostSchema = new mongoose.Schema({
         type: String,
         default: "Quem será o Best of the man?"
     },
-    adversary:{
-        name: {
-            type: String,
-        },
-        avatar: {
-            type: String,
-            default: "avatar"
-        }
-    },
     local: {
         type: String,
     },
-    typo : {
+    tipo : {
         type: String,
         default: "Amistoso"
     },
     status: {
         type: String,
-        default: "Jogo marcado"
+        default: "Marcado"
+    },
+    streamer: {
+        type: String,
+    },
+    adversary:{
+        name: {
+            type: String,
+            required: true 
+        },
+        avatar: {
+            type: String,
+            default: "https://guerreiros.herokuapp.com/logoClubs/logoGenerica.png"
+        }
     },
     events: [{
         event: {
