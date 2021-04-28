@@ -18,7 +18,7 @@ class Jogo {
 
     buscarTodosJogos = async function() {
         try {
-            return await Jogos.find().sort({test: 1})
+            return await Jogos.find().sort({date: 1})
         } catch (error) {
             return {error: 'an error has occurred!'}
         }
