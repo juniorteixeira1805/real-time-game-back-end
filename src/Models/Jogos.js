@@ -28,9 +28,6 @@ const JogostSchema = new mongoose.Schema({
         type: String,
         default: "Amistoso"
     },
-    avatarTipo : {
-        type: String,
-    },
     status: {
         type: String,
         default: "Marcado"
