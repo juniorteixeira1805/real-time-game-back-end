@@ -30,7 +30,6 @@ const JogostSchema = new mongoose.Schema({
     },
     avatarTipo : {
         type: String,
-        default: ""
     },
     status: {
         type: String,
