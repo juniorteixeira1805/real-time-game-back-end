@@ -8,8 +8,14 @@ const JogostSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    dateGamer: {
+    date: {
         type: Date,
+    },
+    dateGamer: {
+        type: String,
+    },
+    hourGame: {
+        type: String,
     },
     bestOfTheMan: {
         type: String,
@@ -21,6 +27,10 @@ const JogostSchema = new mongoose.Schema({
     tipo : {
         type: String,
         default: "Amistoso"
+    },
+    avatarTipo : {
+        type: String,
+        default: ""
     },
     status: {
         type: String,
@@ -95,6 +105,34 @@ const JogostSchema = new mongoose.Schema({
             required: true 
         }
     }],
+})
+
+formatarData = async function(date) {
+    let data = new Date(date)
+    let dia = data.getDate()
+    if(dia<10) dia = `0${dia}`
+    let mes = parseInt(data.getMonth()) + 1
+    if(mes<10) mes = `0${mes}`
+    let ano = data.getFullYear()
+
+    return `${dia}/${mes}/${ano}`
+}
+
+formatarHora = async function(date) {
+    dayName = new Array ("Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado")
+    let data = new Date(date)
+    let hora = data.getHours()
+    if(hora<10) hora = `0${hora}`
+    let minutos = data.getMinutes()
+    if(minutos<10) minutos = `0${minutos}`
+    let dia = data.getDay()
+
+    return `${dayName[dia]} às ${hora}:${minutos}`
+}
+
+JogostSchema.pre('save', async function(next){
+    this.dateGamer = await formatarData(this.date)
+    this.hourGame = await formatarHora(this.date)
 })
 
 // Definido o pluglin para poder utilizar a função paginate
