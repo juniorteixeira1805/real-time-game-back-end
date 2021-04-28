@@ -24,6 +24,13 @@ const JogostSchema = new mongoose.Schema({
             default: "avatar"
         }
     },
+    local: {
+        type: String,
+    },
+    typo : {
+        type: String,
+        default: "Amistoso"
+    },
     status: {
         type: String,
         default: "Jogo marcado"
