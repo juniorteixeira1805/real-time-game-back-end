@@ -123,7 +123,7 @@ formatarHora = async function(date) {
     if(minutos<10) minutos = `0${minutos}`
     let dia = data.getDay()
 
-    return `${dayName[dia]} às ${hora}:${minutos}`
+    return `${dayName[dia]}, ${hora}:${minutos}`
 }
 
 JogostSchema.pre('save', async function(next){
