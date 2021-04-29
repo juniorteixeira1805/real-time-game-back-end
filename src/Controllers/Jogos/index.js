@@ -13,7 +13,7 @@ module.exports = {
     async show(req, res){
         try {
             const jogo = new Jogo();
-            return res.status(200).send(await jogo.buscarUmJogos(req.params.id));
+            return res.status(200).send(await jogo.buscarUmjogo(req.params.id));
         } catch (error) {
             return res.status(400).send({erro: error});
         }

@@ -24,11 +24,13 @@ class Jogo {
         }
     }
 
-    buscarUmjogos = async function(id) {
+    buscarUmjogo = async function(id) {
         if(!id) return {error: 'id not informed!'}
 
         try {
-            return await Jogos.findById(id)
+            const jogo = await Jogos.findById(id)
+            if(!jogo) return {error: 'Game not found!'}
+            return await jogo
         } catch (error) {
             return {error: 'an error has occurred!'}
         }
@@ -66,7 +68,7 @@ class Jogo {
         try {
             //Buscando o Model do jogo
             const jogo = await Jogos.findById(idJogo)
-            if(!jogo) return {error: 'Jogo não encontrado!'}
+            if(!jogo) return {error: 'Game not found!'}
             //adicionando o evento ao array events do Model jogo
             await jogo.events.push(evento)
             //verificando se o evento foi um gol
