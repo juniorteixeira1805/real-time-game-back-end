@@ -1,6 +1,6 @@
 # real-time-game-back-end
 <h1 align="center">
-  <img alt="dev.finances" title="dev.finances" src="assets/icon.png" width="220px" />
+  <img alt="dev.finances" title="dev.finances" src="public/LogoClubs/guerreiros.png" width="220px" />
 </h1>
 
 <p align="center">
