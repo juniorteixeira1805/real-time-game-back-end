@@ -94,10 +94,10 @@ class Jogo {
                 await jogo.cards.push(card)
             }
             //Mudando o status do jogo dependendo do evento
-            if(evento.event === "Inicio primeiro") editarJogos(idJogo, {status: "Primeiro"})
-            if(evento.event === "Fim primeiro") editarJogos(idJogo, {status: "Intervalo"})
-            if(evento.event === "Inicio segundo") editarJogos(idJogo, {status: "Segundo"})
-            if(evento.event === "Fim segundo") editarJogos(idJogo, {status: "Jogo finalizado"})
+            if(evento.event === "Inicio primeiro") this.editarJogos(idJogo, {status: "Primeiro"})
+            if(evento.event === "Fim primeiro") this.editarJogos(idJogo, {status: "Intervalo"})
+            if(evento.event === "Inicio segundo") this.editarJogos(idJogo, {status: "Segundo"})
+            if(evento.event === "Fim segundo") this.editarJogos(idJogo, {status: "Jogo finalizado"})
 
             //Salvando o Model modificado
             await jogo.save();
