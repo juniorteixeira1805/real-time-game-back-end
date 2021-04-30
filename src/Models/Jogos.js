@@ -34,6 +34,7 @@ const JogostSchema = new mongoose.Schema({
     },
     streamer: {
         type: String,
+        default: "Inativo"
     },
     adversary:{
         name: {
