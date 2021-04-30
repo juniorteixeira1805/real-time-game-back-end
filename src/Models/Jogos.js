@@ -19,7 +19,7 @@ const JogostSchema = new mongoose.Schema({
     },
     bestOfTheMan: {
         type: String,
-        default: "Quem será o Best of the man?"
+        default: "Indefinido"
     },
     local: {
         type: String,
