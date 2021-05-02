@@ -25,6 +25,7 @@ mongoose.connect(process.env.BD_TESTES, { useUnifiedTopology: true })
 requireDir('../src/Models')
 
 //--Rotas
-app.use('/', require('../src/Routes/routes'))
+app.use('/', require('../src/Routes/Jogos'))
+app.use('/noticias', require('../src/Routes/Noticias'))
 
 app.listen(PORT, ()=>console.log('API its working'))
