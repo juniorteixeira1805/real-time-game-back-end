@@ -8,7 +8,7 @@ routes.get('/noticias', NoticiasController.index);
 routes.get('/noticia/:id', NoticiasController.show);
 //******* Rotas de edição ***********/
 routes.put('/edit/:id', NoticiasController.update);
-routes.put('/addimage', NoticiasController.addImage);
+routes.put('/addimage/:id', NoticiasController.addImage);
 //******* Rotas de criar ***********/
 routes.post('/register', NoticiasController.store);
 //******* Rotas de deletar ***********/

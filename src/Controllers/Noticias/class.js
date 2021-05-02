@@ -13,7 +13,6 @@ class Noticia {
         try {
             return await Noticias.create(body);
         } catch (error) {
-            console.log(error)
             return {error: 'an error has occurred!'}
         }
     }
@@ -45,7 +44,6 @@ class Noticia {
         try {
             return await Noticias.findByIdAndUpdate(id, body, {new: true});
         } catch (error) {
-            console.error(error)
             return {error: 'an error has occurred!'}
         }
     }
@@ -64,17 +62,18 @@ class Noticia {
     }
 
     //Função que adiciona um evento ao Noticia
-    adicionarEvento = async function(idNoticia, image) {
+    adicionarImage = async function(idNoticia, image) {
         if(!idNoticia) return {error: 'id not informed!'}
-        if(!images.link) return {error: 'link not informed!'}
-        if(!images.authorImage) return {error: 'author not informed!'}
+        console.log(image)
+        if(!image.link) return {error: 'link not informed!'}
+        if(!image.authorImage) return {error: 'author not informed!'}
 
         try {
             //Buscando o Model do Noticia
             const Noticia = await Noticias.findById(idNoticia)
-            if(!Noticia) return {error: 'Game not found!'}
+            if(!Noticia) return {error: 'News not found!'}
             //adicionando o evento ao array events do Model Noticia
-            await Noticia.images.images.push(image)
+            await Noticia.images.push(image)
             
             //Salvando o Model modificado
             await Noticia.save();
