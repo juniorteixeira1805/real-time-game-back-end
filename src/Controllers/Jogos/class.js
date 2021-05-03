@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 
 const Jogos = mongoose.model('jogos')
+const Jogadores = mongoose.model('jogadores')
 
 class Jogo {
 
@@ -76,23 +77,40 @@ class Jogo {
                 //criando um objeto gol
                 const gol = {
                     club: evento.club,
-                    player: evento.player,
-                    assistance: evento.assistance,
+                    player: await this.adicionarGol(evento.player),
+                    assistance: await evento.assistance ? await this.adicionarAssistencia(evento.assistance) : 'Indefinido',
                     time: evento.time
                 }
                 //adicionando gol ao array gols do Model jogo
                 await jogo.goals.push(gol)
             }
             if(evento.event === "Cartão"){
-                //criando um objeto gol
-                const card = {
-                    color: evento.cardColor,
-                    player: evento.player,
-                    time: evento.time
+                //adicionando cartao vermelho ao jogador
+                if(evento.cardColor === "Vermelho"){
+                    //criando um objeto gol
+                    const card = {
+                        color: evento.cardColor,
+                        player: await this.adicionarCartaoVermelho(evento.player),
+                        time: evento.time
+                    }
+                    //adicionando cartao ao array cartao do Model jogo
+                    await jogo.cards.push(card)
                 }
-                //adicionando gol ao array gols do Model jogo
-                await jogo.cards.push(card)
+
+                //adicionando cartao amarelo ao jogador
+                if(evento.cardColor === "Amarelo"){
+                    //criando um objeto gol
+                    const card = {
+                        color: evento.cardColor,
+                        player: await this.adicionarCartaoAmarelo(evento.player),
+                        time: evento.time
+                    }
+                    //adicionando cartao ao array cartao do Model jogo
+                    await jogo.cards.push(card)
+                } 
             }
+
+            
             //Mudando o status do jogo dependendo do evento
             if(evento.event === "Inicio primeiro") this.editarJogos(idJogo, {status: "Primeiro"})
             if(evento.event === "Fim primeiro") this.editarJogos(idJogo, {status: "Intervalo"})
@@ -103,6 +121,93 @@ class Jogo {
             await jogo.save();
 
             return jogo
+        } catch (error) {
+            console.log(error)
+            return {error: 'an error has occurred!'}
+        }
+    }
+
+    adicionarEscalacao = async function (idJogo, idJogador) {
+        if(!idJogo) return {error: 'id gamer not informed!'}
+        if(!idJogador) return {error: 'id player not informed!'}
+
+        try {
+            const jogador = await Jogadores.findById(idJogador.idJogador)
+            if(!jogador) return {error: 'player not found!'}
+            jogador.dados.jogos = await jogador.dados.jogos + 1
+            await jogador.save();
+
+            const escalacao = {
+                idJogador: idJogador.idJogador,
+                name: jogador.nome,
+                posicao: jogador.posicao
+            }
+            
+            const jogo = await Jogos.findById(idJogo)
+            if(!jogo) return {error: 'gamer not found!'}
+            await jogo.escalacao.push(escalacao)
+            await jogo.save();
+            return {success: "successfully add"}
+        } catch (error) {
+            return {error: 'an error has occurred!'}
+        }
+    }
+
+    adicionarGol = async function (idJogador) {
+        if(!idJogador) return {error: 'id player not informed!'}
+
+        try {
+            const jogador = await Jogadores.findById(idJogador)
+            if(!jogador) return {error: 'player not found!'}
+            jogador.dados.gols = jogador.dados.gols + 1
+            await jogador.save();
+
+            return jogador.nome
+        } catch (error) {
+            return {error: 'an error has occurred!'}
+        }
+    }
+
+    adicionarAssistencia = async function (idJogador) {
+        if(!idJogador) return {error: 'id player not informed!'}
+
+        try {
+            const jogador = await Jogadores.findById(idJogador)
+            if(!jogador) return {error: 'player not found!'}
+            jogador.dados.assistencias = jogador.dados.assistencias + 1
+            await jogador.save();
+
+            return jogador.nome
+        } catch (error) {
+            return {error: 'an error has occurred!'}
+        }
+    }
+
+    adicionarCartaoAmarelo = async function (idJogador) {
+        if(!idJogador) return {error: 'id player not informed!'}
+
+        try {
+            const jogador = await Jogadores.findById(idJogador)
+            if(!jogador) return {error: 'player not found!'}
+            jogador.dados.cartaoAmarelo = jogador.dados.cartaoAmarelo + 1
+            await jogador.save();
+
+            return jogador.nome
+        } catch (error) {
+            return {error: 'an error has occurred!'}
+        }
+    }
+
+    adicionarCartaoVermelho = async function(idJogador) {
+        if(!idJogador) return {error: 'id player not informed!'}
+
+        try {
+            const jogador = await Jogadores.findById(idJogador)
+            if(!jogador) return {error: 'player not found!'}
+            jogador.dados.cartaoVermelho = jogador.dados.cartaoVermelho + 1
+            await jogador.save();
+
+            return jogador.nome
         } catch (error) {
             return {error: 'an error has occurred!'}
         }

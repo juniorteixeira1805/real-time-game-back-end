@@ -51,8 +51,18 @@ module.exports = {
     async addEvent(req, res){
         try {
             const jogo = new Jogo();
-            return res.status(200).send(await jogo.adicionarEvento(req.body.id, req.body));
+            return res.status(200).send(await jogo.adicionarEvento(req.params.id, req.body));
         } catch (error) {
+            return res.status(400).send({erro: error});
+        }
+    },
+
+    async adicionarEscalacao(req, res){
+        try {
+            const jogo = new Jogo();
+            return res.status(200).send(await jogo.adicionarEscalacao(req.params.id, req.body));
+        } catch (error) {
+            console.log(error)
             return res.status(400).send({erro: error});
         }
     }
