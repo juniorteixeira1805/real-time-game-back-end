@@ -18,7 +18,7 @@ const path = require('path')
 app.use(express.static(path.join(__dirname, '../public')))
 
 //-- iniciando o DB
-mongoose.connect(process.env.BD_TESTES, { useUnifiedTopology: true })
+mongoose.connect(process.env.BD_LOCAL, { useUnifiedTopology: true })
 
 //--Importando models
     //- O require dir é uma biblioteca para importa pasta em um arquivo
@@ -27,5 +27,6 @@ requireDir('../src/Models')
 //--Rotas
 app.use('/', require('../src/Routes/Jogos'))
 app.use('/noticias', require('../src/Routes/Noticias'))
+app.use('/jogadores', require('../src/Routes/Jogadores'))
 
 app.listen(PORT, ()=>console.log('API its working'))
