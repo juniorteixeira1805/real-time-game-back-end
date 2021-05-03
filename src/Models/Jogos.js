@@ -46,6 +46,18 @@ const JogostSchema = new mongoose.Schema({
             default: "https://guerreiros.herokuapp.com/logoClubs/logoGenerica.png"
         }
     },
+    escalacao: [{
+        idJogador: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'jogadores',
+        },
+        name: {
+            type: String,
+        },
+        posicao: {
+            type: String,
+        }
+    }],
     events: [{
         event: {
             type: String,
@@ -65,7 +77,6 @@ const JogostSchema = new mongoose.Schema({
         },
         time: {
             type: String,
-            required: true 
         },
         cardColor: {
             type: String,

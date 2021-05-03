@@ -8,28 +8,52 @@ const jogadorestSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    dateNoticia: {
-        type: String,
-    },
-    author: {
+    nome: {
         type: String,
         required: true
     },
-    title: {
-        type: String,
-        required: true
-    },
-    description : {
+    idade: {
         type: String,
     },
-    images: [{
-        link: {
-            type: String,
+    posicao: {
+        type: String,
+    },
+    caracteristica: {
+        type: String,
+    },
+    endereco : {
+        type: String,
+    },
+    avatar: {
+        type: String,
+        default: "https://guerreiros.herokuapp.com/jogadores/default.png"
+    },
+    ativo: {
+        type: Boolean,
+        default: true
+    },
+    dados: {
+        jogos: {
+            type: Number,
+            default: 0
         },
-        authorImage: {
-            type: String,
+        gols: {
+            type: Number,
+            default: 0
+        },
+        assistencias: {
+            type: Number,
+            default: 0
+        },
+        cartaoAmarelo: {
+            type: Number,
+            default: 0
+        },
+        cartaoVermelho: {
+            type: Number,
+            default: 0
         }
-    }],
+    }
 })
 
 formatarData = async function(dateCreater) {
