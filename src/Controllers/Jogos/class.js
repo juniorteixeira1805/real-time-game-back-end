@@ -64,7 +64,6 @@ class Jogo {
     //Função que adiciona um evento ao Jogo
     adicionarEvento = async function(idJogo, evento) {
         if(!idJogo) return {error: 'id not informed!'}
-        if(!evento) return {error: 'evento not informed!'}
 
         try {
             //Buscando o Model do jogo
@@ -109,13 +108,6 @@ class Jogo {
                     await jogo.cards.push(card)
                 } 
             }
-
-            
-            //Mudando o status do jogo dependendo do evento
-            if(evento.event === "Inicio primeiro") this.editarJogos(idJogo, {status: "Primeiro"})
-            if(evento.event === "Fim primeiro") this.editarJogos(idJogo, {status: "Intervalo"})
-            if(evento.event === "Inicio segundo") this.editarJogos(idJogo, {status: "Segundo"})
-            if(evento.event === "Fim segundo") this.editarJogos(idJogo, {status: "Jogo finalizado"})
 
             //Salvando o Model modificado
             await jogo.save();
