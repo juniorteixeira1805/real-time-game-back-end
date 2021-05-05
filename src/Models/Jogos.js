@@ -8,6 +8,9 @@ const JogostSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
+    time: {
+        type: Number,
+    },
     date: {
         type: Date,
     },
@@ -61,7 +64,6 @@ const JogostSchema = new mongoose.Schema({
     events: [{
         event: {
             type: String,
-            required: true
         },
         description: {
             type: String,
@@ -77,12 +79,16 @@ const JogostSchema = new mongoose.Schema({
         },
         time: {
             type: String,
+            required: true 
         },
         cardColor: {
             type: String,
         },
     }],
     goals: [{
+        assistance: {
+            type: String,
+        },
         club: {
             type: String,
             required: true,
@@ -91,9 +97,6 @@ const JogostSchema = new mongoose.Schema({
             type: String,
             required: true 
         },
-        assistance: {
-            type: String,
-        },
         time: {
             type: String,
             required: true 
@@ -101,6 +104,10 @@ const JogostSchema = new mongoose.Schema({
     }],
     cards: [{
         color: {
+            type: String,
+            required: true,
+        },
+        club: {
             type: String,
             required: true,
         },
