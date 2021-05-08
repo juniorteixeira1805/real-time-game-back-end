@@ -132,7 +132,7 @@ class Jogo {
             const escalacao = {
                 idJogador: idJogador.idJogador,
                 name: jogador.nome,
-                posicao: jogador.posicao
+                posicao: jogador.posicao,
                 avatar: jogador.avatar
             }
             
