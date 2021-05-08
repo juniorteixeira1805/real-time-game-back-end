@@ -133,6 +133,7 @@ class Jogo {
                 idJogador: idJogador.idJogador,
                 name: jogador.nome,
                 posicao: jogador.posicao
+                avatar: jogador.avatar
             }
             
             const jogo = await Jogos.findById(idJogo)
