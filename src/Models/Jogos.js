@@ -9,7 +9,7 @@ const JogostSchema = new mongoose.Schema({
         default: Date.now
     },
     time: {
-        type: Number,
+        type: String,
     },
     date: {
         type: Date,
