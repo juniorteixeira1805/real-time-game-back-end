@@ -59,6 +59,9 @@ const JogostSchema = new mongoose.Schema({
         },
         posicao: {
             type: String,
+        },
+        avatar: {
+            type: String,
         }
     }],
     events: [{
