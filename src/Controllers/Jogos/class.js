@@ -44,7 +44,6 @@ class Jogo {
         try {
             return await Jogos.findByIdAndUpdate(id, body, {new: true});
         } catch (error) {
-            console.error(error)
             return {error: 'an error has occurred!'}
         }
     }
@@ -69,14 +68,13 @@ class Jogo {
             //Buscando o Model do jogo
             const jogo = await Jogos.findById(idJogo)
             if(!jogo) return {error: 'Game not found!'}
-            //adicionando o evento ao array events do Model jogo
-            await jogo.events.push(evento)
+
             //verificando se o evento foi um gol
             if(evento.event === "GOOOL"){
                 //criando um objeto gol
                 const gol = {
                     club: evento.club,
-                    player: await this.adicionarGol(evento.player),
+                    player: evento.club === "Guerreiros" ? await this.adicionarGol(evento.player) : 'Jogador adversário',
                     assistance: await evento.assistance ? await this.adicionarAssistencia(evento.assistance) : 'Indefinido',
                     time: evento.time
                 }
@@ -88,8 +86,9 @@ class Jogo {
                 if(evento.cardColor === "Vermelho"){
                     //criando um objeto gol
                     const card = {
+                        club: evento.club,
                         color: evento.cardColor,
-                        player: await this.adicionarCartaoVermelho(evento.player),
+                        player: evento.club === "Guerreiros" ? await this.adicionarCartaoVermelho(evento.player) : 'Jogador adversário',
                         time: evento.time
                     }
                     //adicionando cartao ao array cartao do Model jogo
@@ -100,15 +99,21 @@ class Jogo {
                 if(evento.cardColor === "Amarelo"){
                     //criando um objeto gol
                     const card = {
+                        club: evento.club,
                         color: evento.cardColor,
-                        player: await this.adicionarCartaoAmarelo(evento.player),
+                        player: evento.club === "Guerreiros" ? await this.adicionarCartaoAmarelo(evento.player) : 'Jogador adversário',
                         time: evento.time
                     }
                     //adicionando cartao ao array cartao do Model jogo
                     await jogo.cards.push(card)
                 } 
             }
-
+            //adicionando o evento ao array events do Model jogo
+            if(evento.club === "Guerreiros"){
+                const jogador = await Jogadores.findById(evento.player)
+                evento.player = jogador.nome    
+            }
+            await jogo.events.push(evento)
             //Salvando o Model modificado
             await jogo.save();
 
@@ -178,7 +183,7 @@ class Jogo {
 
     adicionarCartaoAmarelo = async function (idJogador) {
         if(!idJogador) return {error: 'id player not informed!'}
-
+        console.log(idJogador)
         try {
             const jogador = await Jogadores.findById(idJogador)
             if(!jogador) return {error: 'player not found!'}
