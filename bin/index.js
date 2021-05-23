@@ -27,6 +27,7 @@ requireDir('../src/Models')
 //--Rotas
 app.use('/', require('../src/Routes/Jogos'))
 app.use('/noticias', require('../src/Routes/Noticias'))
+app.use('/equipe', require('../src/Routes/Equipe'))
 app.use('/jogadores', require('../src/Routes/Jogadores'))
 
 app.listen(PORT, ()=>console.log('API its working'))
