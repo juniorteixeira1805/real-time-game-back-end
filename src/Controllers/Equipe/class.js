@@ -88,6 +88,26 @@ class Equipe {
         try {
             const artilheiros = jogadores.filter((obj) => obj.dados.gols > 0 )
             const assistencias = jogadores.filter((obj) => obj.dados.assistencias > 0 )
+
+            artilheiros.sort(function (a, b) {
+                if (a.dados.gols > b.dados.gols) {
+                  return 1;
+                }
+                if (a.dados.gols < b.dados.gols) {
+                  return -1;
+                }
+                return 0;
+              });
+
+              assistencias.sort(function (a, b) {
+                if (a.dados.assistencias > b.dados.assistencias) {
+                  return 1;
+                }
+                if (a.dados.assistencias < b.dados.assistencias) {
+                  return -1;
+                }
+                return 0;
+              });
     
             return { artilheiros: artilheiros, assistencias: assistencias}
         } catch (error) {
