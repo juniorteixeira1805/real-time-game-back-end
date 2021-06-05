@@ -18,7 +18,7 @@ class Jogador {
 
     buscarTodosJogadores = async function() {
         try {
-            return await Jogadores.find().sort({dateCreater: -1})
+            return await Jogadores.find().sort({ posicao: -1 })
         } catch (error) {
             return {error: 'an error has occurred!'}
         }

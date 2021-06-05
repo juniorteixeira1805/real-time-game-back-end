@@ -29,7 +29,7 @@ class Jogo {
         if(!id) return {error: 'id not informed!'}
 
         try {
-            const jogo = await Jogos.findById(id)
+            const jogo = await Jogos.findById(id).populate('idJogador')
             if(!jogo) return {error: 'Game not found!'}
             return await jogo
         } catch (error) {
