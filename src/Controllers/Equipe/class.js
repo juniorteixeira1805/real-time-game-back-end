@@ -12,7 +12,7 @@ class Equipe {
             const jogadores = await Jogadores.find()
             const jogos = await Jogos.find()
 
-            const totalJogos = await this.quantJogos(jogos)
+            const { totalJogos, vitorias, derrotas, empates, aproveitamento } = this.infoJogos(jogos)
             const { golsSofridos, golsMarcados } = this.quantGols(jogos)
             const { vermelho, amarelo } = this.quantCartoes(jogos)
             const { artilheiros, assistencias } = await this.artilhariaAssistencias(jogadores)
@@ -24,6 +24,10 @@ class Equipe {
 
             const dados = {
                 jogos: totalJogos,
+                vitorias: vitorias,
+                derrotas: derrotas,
+                empates: empates,
+                aproveitamento: aproveitamento,
                 cartoesAmarelos: amarelo,
                 cartaoAmareloPorJogo: cartaoAmareloPorJogo,
                 cartoesVermelhos: vermelho,
@@ -42,12 +46,42 @@ class Equipe {
         }
     }
 
-    quantJogos = async function(jogos) {
+    infoJogos = function(jogos) {
         try {
             const jogosFinalizados = jogos.filter((objeto) => objeto.status === "Jogo finalizado")
-            return parseInt(jogosFinalizados.length)
+            var vitorias = 0
+            var derrotas = 0
+            var empates = 0
+            var golGuerreios = 0
+            var golAdver = 0
+            var aproveitamento = 0
+
+            jogos.map((objeto) => {
+                objeto.goals.map((obj) => {
+                    if(obj.club === "Guerreiros"){
+                        golGuerreios = 1 + golGuerreios
+                    } else{
+                        golAdver = 1 + golAdver
+                    }
+                })
+
+                if(golGuerreios > golAdver){
+                    vitorias = 1 + vitorias
+                } else if (golAdver > golGuerreios){
+                    derrotas = 1 + derrotas
+                } else if( golGuerreios === golAdver && objeto.goals.length > 0){
+                    empates = 1 + empates
+                }
+
+                golGuerreios = 0
+                golAdver = 0
+            })
+
+            let pontosGanhos = (vitorias * 3) + empates
+            aproveitamento = ((pontosGanhos * 100) / (jogosFinalizados.length * 3)).toFixed(2)
+            return { totalJogos: jogosFinalizados.length, vitorias: vitorias, derrotas: derrotas, empates: empates, aproveitamento: aproveitamento }
         } catch (error) {
-            return {}
+            return error
         }
     }
 
@@ -63,8 +97,7 @@ class Equipe {
 
             return { golsSofridos: golsSofridos.length, golsMarcados: golsMarcados.length}
         } catch (error) {
-            console.log(error)
-            return {}
+            return error
         }
     }
 
@@ -80,7 +113,7 @@ class Equipe {
 
             return { vermelho: vermelho.length, amarelo: amarelo.length}
         } catch (error) {
-            return {}
+            return error
         }
     }
 
@@ -111,7 +144,7 @@ class Equipe {
     
             return { artilheiros: artilheiros, assistencias: assistencias}
         } catch (error) {
-            return {}
+            return error
         }
     }
 }
