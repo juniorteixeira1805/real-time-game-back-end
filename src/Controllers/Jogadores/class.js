@@ -18,7 +18,7 @@ class Jogador {
 
     buscarTodosJogadores = async function() {
         try {
-            return await Jogadores.find().select({ativo: true})
+            return await Jogadores.find({ativo: true})
         } catch (error) {
             return {error: 'an error has occurred!'}
         }
