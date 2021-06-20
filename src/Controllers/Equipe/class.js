@@ -44,7 +44,7 @@ class Equipe {
 
     quantJogos = async function(jogos) {
         try {
-            const jogosFinalizados = jogos.map((objeto) => objeto.status === "Finalizado")
+            const jogosFinalizados = jogos.filter((objeto) => objeto.status === "Jogo finalizado")
             return parseInt(jogosFinalizados.length)
         } catch (error) {
             return {}
